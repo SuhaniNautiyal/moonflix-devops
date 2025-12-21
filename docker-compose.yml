@@ -1,0 +1,29 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: moonflix-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: moonflix-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env.docker
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    container_name: moonflix-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
