@@ -7,14 +7,19 @@ import tokenMiddlerware from "../middlewares/token.middleware.js";
 
 const getList = async (req, res) => {
   try {
-    const { page } = req.query;
-    const { mediaType, mediaCategory } = req.params;
+    const { mediaCategory } = req.params;   // movie | tv
+    const { category, page } = req.query;   // popular | top_rated
 
-    const response = await tmdbApi.mediaList({ mediaType, mediaCategory, page });
+    const response = await tmdbApi.mediaList({
+      mediaType: mediaCategory,
+      mediaCategory: category,
+      page
+    });
 
-    return responseHandler.ok(res, response);
-  } catch {
-    responseHandler.error(res);
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Something went wrong" });
   }
 };
 
