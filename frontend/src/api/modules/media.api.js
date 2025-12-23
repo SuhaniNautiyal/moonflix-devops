@@ -2,9 +2,14 @@ import privateClient from "../client/private.client";
 import publicClient from "../client/public.client";
 
 const mediaEndpoints = {
-  list: ({ mediaType, mediaCategory, page }) => `${mediaType}/${mediaCategory}?page=${page}`,
-  detail: ({ mediaType, mediaId }) => `${mediaType}/detail/${mediaId}`,
-  search: ({ mediaType, query, page }) => `${mediaType}/search?query=${query}&page=${page}`
+  list: ({ mediaType, mediaCategory, page }) =>
+    `media/${mediaType}?page=${page}&category=${mediaCategory}`,
+
+  detail: ({ mediaType, mediaId }) =>
+    `media/${mediaType}/detail/${mediaId}`,
+
+  search: ({ mediaType, query, page }) =>
+    `media/${mediaType}/search?query=${query}&page=${page}`
 };
 
 const mediaApi = {
