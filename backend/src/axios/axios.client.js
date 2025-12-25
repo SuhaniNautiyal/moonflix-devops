@@ -7,13 +7,21 @@ const axiosClient = axios.create({
   },
   headers: {
     Accept: "application/json",
-    "Accept-Encoding": "identity"
+    Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`
   }
 });
 
 const get = async (url) => {
-  const response = await axiosClient.get(url);
-  return response.data;
+  try {
+    const response = await axiosClient.get(url);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "TMDB REQUEST FAILED:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
 };
 
 export default { get };
